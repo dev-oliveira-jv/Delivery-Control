@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:padaria/ui/home/pages/create_product_page.dart';
 import '../../../core/services/product_service.dart';
 import '../../../data/models/product_model.dart';
 
@@ -73,6 +74,14 @@ class _ListProductPageState extends State<ListProductPage> {
                               "R\$ ${product.valor.toStringAsFixed(2)} - Estoque: ${product.estoque}"),
                         ],
                       ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => CreateProductPage(
+                                      productId: product.objectId,
+                                    )));
+                      },
                       trailing: Container(
                         width: 8,
                         height: 8,

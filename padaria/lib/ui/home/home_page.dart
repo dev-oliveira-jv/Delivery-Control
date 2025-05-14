@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/home_content.dart';
-import 'pages/cadastro_page.dart';
+import 'pages/create_product_page.dart';
 import 'pages/perfil_page.dart';
 import 'pages/list_product_page.dart';
 
@@ -17,11 +17,16 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _buildPages(int privilegeId) {
     switch (privilegeId) {
       case 1: // Administrador
-        return const [HomeContent(), CadastroPage(), PerfilPage()];
+        return const [HomeContent(), CreateProductPage(), PerfilPage()];
       case 2: // Entregador
         return const [HomeContent(), PerfilPage()];
       case 3: // Usuário
-        return const [HomeContent(), PerfilPage(), ListProductPage()];
+        return const [
+          HomeContent(),
+          PerfilPage(),
+          ListProductPage(),
+          CreateProductPage()
+        ];
     }
     throw Exception('Privilegio não encontrado');
   }
@@ -32,7 +37,9 @@ class _HomePageState extends State<HomePage> {
         return const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Cadastro'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Usuário')
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Usuário'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.app_registration), label: 'Produtos'),
         ];
       case 2: // Entregador
         return const [
@@ -45,6 +52,8 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Usuário'),
           BottomNavigationBarItem(
               icon: Icon(Icons.list), label: 'Lista de Produtos'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.app_registration), label: 'Produto')
         ];
       default:
         throw Exception("Privilégio não encontrado");

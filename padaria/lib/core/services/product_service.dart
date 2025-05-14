@@ -34,4 +34,8 @@ class ProductService {
   Future<void> deleteProduct(String objectId) async {
     await _productRepository.deleteProduct(objectId);
   }
+
+  Future<List<Map<String, dynamic>>> listGrupo() async {
+    return await _productRepository.listGrupo();
+  }
 }

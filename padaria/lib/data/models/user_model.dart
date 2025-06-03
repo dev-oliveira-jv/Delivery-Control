@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+
 class UserModel {
   final String? objectId;
   final String? username;
@@ -5,6 +9,8 @@ class UserModel {
   final String? sessionToken;
   final Map<String, dynamic>? privelege;
   final int privelegeId;
+  final double limiteCredito;
+  final File? image;
 
   UserModel(
       {required this.objectId,
@@ -12,7 +18,9 @@ class UserModel {
       required this.email,
       required this.sessionToken,
       required this.privelege,
-      required this.privelegeId});
+      required this.privelegeId,
+      this.image = null,
+      this.limiteCredito = 0.0});
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     final privelegeMap = json['privelege'] as Map<String, dynamic>?;
@@ -22,6 +30,23 @@ class UserModel {
         email: json['email'] as String?,
         sessionToken: json['sessionToken'] as String?,
         privelege: privelegeMap,
-        privelegeId: privelegeMap?['number']);
+        privelegeId: privelegeMap?['number'],
+        limiteCredito: json['limite']?.toDouble() ?? 0.0);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'objectId': objectId,
+      'username': username,
+      'email': email,
+      'sessionToken': sessionToken,
+      'privelege': privelege,
+      'privelegeId': privelegeId,
+      'limite': limiteCredito,
+    };
+  }
+
+  bool temLimiteDisponivel(double valorPedido) {
+    return limiteCredito >= valorPedido;
   }
 }

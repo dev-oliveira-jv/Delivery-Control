@@ -25,9 +25,9 @@ class ProductRepository {
       'objectId': product.objectId,
       'descricao': product.descricao,
       'valor': product.valor,
-      'status': product.estoque,
+      'status': product.status,
       'grupoId': product.grupoId,
-      'estoque': product.status,
+      'estoque': product.estoque,
     });
     return ProductModel.fromJson(response);
   }

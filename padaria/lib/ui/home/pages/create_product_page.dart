@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:padaria/core/enum/list_producto_page_mode.dart';
 import 'package:padaria/data/repositories/product_repository.dart';
 import '../../../core/services/product_service.dart';
 import '../../../data/models/product_model.dart';
 
 class CreateProductPage extends StatefulWidget {
   final String? productId;
-  const CreateProductPage({Key? key, this.productId}) : super(key: key);
+  const CreateProductPage({Key? key, this.productId, ListProductMode? mode})
+      : super(key: key);
 
   @override
   State<CreateProductPage> createState() => _CreateProductPage();
@@ -109,21 +111,54 @@ class _CreateProductPage extends State<CreateProductPage> {
             child: ListView(
               children: [
                 TextFormField(
+                  cursorColor: Colors.black,
                   controller: _descricaoController,
-                  decoration: const InputDecoration(labelText: 'Descrição'),
+                  decoration: InputDecoration(
+                      labelText: 'Descrição',
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                      )),
                   validator: (value) =>
                       value!.isEmpty ? 'O Campo e obrigatório' : null,
                 ),
+                const SizedBox(
+                  height: 8,
+                ),
                 TextFormField(
+                  cursorColor: Colors.black,
                   controller: _valorController,
-                  decoration: const InputDecoration(labelText: 'Valor'),
+                  decoration: InputDecoration(
+                      labelText: 'Valor',
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                      )),
                   keyboardType: TextInputType.number,
                   validator: (value) =>
                       value!.isEmpty ? 'Informe o Valor' : null,
                 ),
+                const SizedBox(
+                  height: 8,
+                ),
                 TextFormField(
+                  cursorColor: Colors.black,
                   controller: _estoqueController,
-                  decoration: const InputDecoration(labelText: 'Estoque'),
+                  decoration: InputDecoration(
+                      labelText: 'Estoque',
+                      focusedBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                      )),
                   keyboardType: TextInputType.number,
                   validator: (value) =>
                       value!.isEmpty ? 'Informe o estoque' : null,
@@ -145,6 +180,8 @@ class _CreateProductPage extends State<CreateProductPage> {
                       value == null ? 'Selecione um grupo' : null,
                 ),
                 SwitchListTile(
+                    hoverColor: const Color.fromARGB(255, 240, 225, 222),
+                    activeColor: Color.fromARGB(255, 0, 255, 0),
                     title: const Text('Ativo'),
                     value: _statusAtivo,
                     onChanged: (value) {
@@ -191,9 +228,18 @@ class _CreateProductPage extends State<CreateProductPage> {
                       }
                     },
                     icon: const Icon(Icons.delete),
-                    label: const Text("Excluir"),
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    label: const Text(
+                      "Excluir",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                   )
               ],
             )),

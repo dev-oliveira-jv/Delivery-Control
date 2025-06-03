@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:padaria/ui/home/pages/create_product_page.dart';
 import '../../../core/services/product_service.dart';
 import '../../../data/models/product_model.dart';
+import '../../../core/enum/list_producto_page_mode.dart';
 
 class ListProductPage extends StatefulWidget {
-  const ListProductPage({super.key});
+  const ListProductPage({Key? key, this.mode = ListProductMode.edicao})
+      : super(key: key);
+  final ListProductMode mode;
 
   @override
   State<ListProductPage> createState() => _ListProductPageState();
@@ -19,11 +22,39 @@ class _ListProductPageState extends State<ListProductPage> {
     _productFuture = _productService.listProduct();
   }
 
+  void _refreshList() {
+    setState(() {
+      _productFuture = _productService.listProduct();
+    });
+  }
+
+  void _handleProductTap(ProductModel produto) async {
+    if (widget.mode == ListProductMode.selecao) {
+      final produtoSelecionado = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => CreateProductPage(
+                  productId: produto.objectId, mode: ListProductMode.selecao)));
+      if (produtoSelecionado != null) {
+        Navigator.pop(context, produtoSelecionado);
+      }
+    } else {
+      await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => CreateProductPage(
+                  productId: produto.objectId, mode: ListProductMode.edicao)));
+      _refreshList();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Produtos"),
+        title: Text(widget.mode == ListProductMode.selecao
+            ? "Produtos"
+            : "Selecione um produto"),
       ),
       body: FutureBuilder<List<ProductModel>>(
         future: _productFuture,
@@ -74,14 +105,7 @@ class _ListProductPageState extends State<ListProductPage> {
                               "R\$ ${product.valor.toStringAsFixed(2)} - Estoque: ${product.estoque}"),
                         ],
                       ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => CreateProductPage(
-                                      productId: product.objectId,
-                                    )));
-                      },
+                      onTap: () => _handleProductTap(product),
                       trailing: Container(
                         width: 8,
                         height: 8,

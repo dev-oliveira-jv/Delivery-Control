@@ -1,0 +1,1 @@
+enum ListProductMode { edicao, selecao }

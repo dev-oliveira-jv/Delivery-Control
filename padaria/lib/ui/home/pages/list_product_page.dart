@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:padaria/data/models/selected_product.dart';
+import 'package:padaria/ui/home/pages/create_order_page.dart';
 import 'package:padaria/ui/home/pages/create_product_page.dart';
 import '../../../core/services/product_service.dart';
 import '../../../data/models/product_model.dart';
@@ -30,14 +32,8 @@ class _ListProductPageState extends State<ListProductPage> {
 
   void _handleProductTap(ProductModel produto) async {
     if (widget.mode == ListProductMode.selecao) {
-      final produtoSelecionado = await Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => CreateProductPage(
-                  productId: produto.objectId, mode: ListProductMode.selecao)));
-      if (produtoSelecionado != null) {
-        Navigator.pop(context, produtoSelecionado);
-      }
+      final selected = SelectedProduct(product: produto, quantidade: 1);
+      Navigator.pop(context, selected);
     } else {
       await Navigator.push(
           context,

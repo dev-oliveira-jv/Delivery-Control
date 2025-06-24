@@ -30,8 +30,10 @@ class _LoginPageState extends State<LoginPage> {
         SnackBar(content: Text("Login bem-sucedido! ${user.username}")),
       );
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacementNamed(context, '/animation',
-          arguments: user.privelege?['number']);
+      Navigator.pushReplacementNamed(context, '/animation', arguments: {
+        'privelegeId': user.privelegeId,
+        'userModel': user,
+      });
       // Aqui você pode navegar para outra tela ou salvar o sessionToken
     } catch (e) {
       //ignore: avoid_print

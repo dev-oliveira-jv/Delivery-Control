@@ -44,13 +44,11 @@ class OrdersModel {
   Map<String, dynamic> toJson() {
     return {
       'objectId': objectId,
-      'userId': userId,
+      'cliente': userId,
       'userName': userName,
       'items': items.map((item) => item.toJson()).toList(),
-      'valorTotal': valorTotal,
+      'valorTotalFront': valorTotal,
       'status': status,
-      'endereco': endereco,
-      'telefone': telefone,
       'dataHora': dataHora.toIso8601String(),
       'observacao': observacao,
     };
@@ -88,5 +86,21 @@ class OrderItem {
       'valorUnitario': valorUnitario,
       'valorTotal': valorTotal,
     };
+  }
+
+  OrderItem copyWith({
+    String? productId,
+    String? descricao,
+    int? quantidade,
+    double? valorUnitario,
+    double? valorTotal,
+  }) {
+    return OrderItem(
+      productId: productId ?? this.productId,
+      descricao: descricao ?? this.descricao,
+      quantidade: quantidade ?? this.quantidade,
+      valorUnitario: valorUnitario ?? this.valorUnitario,
+      valorTotal: valorTotal ?? this.valorTotal,
+    );
   }
 }

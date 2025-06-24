@@ -34,6 +34,8 @@ class UserModel {
         limiteCredito: json['limite']?.toDouble() ?? 0.0);
   }
 
+  get obejectId => null;
+
   Map<String, dynamic> toJson() {
     return {
       'objectId': objectId,

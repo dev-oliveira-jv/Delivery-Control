@@ -11,16 +11,26 @@ class LoadingAnimationPage extends StatefulWidget {
 }
 
 class _LoadingAnimationPageState extends State<LoadingAnimationPage> {
+  late int privelegeId;
+  late UserModel userModel;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final int privelegeId = ModalRoute.of(context)!.settings.arguments as int;
+      final args =
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+      privelegeId = args['privelegeId'] as int;
+      userModel = args['userModel'] as UserModel;
+
       Future.delayed(const Duration(seconds: 4), () {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (_) => HomePage(privilegeId: privelegeId)));
+                builder: (_) => HomePage(
+                      privelegeId: privelegeId,
+                      userModel: userModel,
+                    )));
       });
     });
   }

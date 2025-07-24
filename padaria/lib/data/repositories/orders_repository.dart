@@ -21,7 +21,7 @@ class OrdersRepository {
     return response.map((item) => OrdersModel.fromJson(item)).toList();
   }
 
-  Future<OrdersModel> updateOrderStatus(String objectId, int status) async {
+  Future<OrdersModel> updateOrderStatus(String? objectId, int? status) async {
     final response = await ApiOrdes.post("/update-order-status", {
       'objectId': objectId,
       'status': status,
@@ -31,5 +31,10 @@ class OrdersRepository {
 
   Future<void> deleteOrder(String objectId) async {
     await ApiOrdes.post("/delete-order", {'objectId': objectId});
+  }
+
+  Future<int> getOrderNumber() async {
+    final response = await ApiOrdes.post("/get-order-number", {});
+    return response['numVenda'];
   }
 }

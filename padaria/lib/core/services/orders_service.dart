@@ -5,14 +5,14 @@ class OrdersService {
   final OrdersRepository _ordersRepository = OrdersRepository();
 
   Future<OrdersModel> createOrder(
-    String userId,
-    String userName,
-    List<OrderItem> items,
-    double valorTotal,
-    String? endereco,
-    String? telefone,
-    String? observacao,
-  ) async {
+      String userId,
+      String userName,
+      List<OrderItem> items,
+      double valorTotal,
+      String? endereco,
+      String? telefone,
+      String? observacao,
+      int numVenda) async {
     final order = OrdersModel(
         userId: userId,
         userName: userName,
@@ -20,7 +20,8 @@ class OrdersService {
         valorTotal: valorTotal,
         status: 0,
         dataHora: DateTime.now(),
-        observacao: observacao);
+        observacao: observacao,
+        numVenda: numVenda);
     return await _ordersRepository.createOrder(order);
   }
 

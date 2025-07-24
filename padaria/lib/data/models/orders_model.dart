@@ -1,41 +1,43 @@
 class OrdersModel {
   final String? objectId;
+  final int? numVenda;
   final String? userId;
   final String? userName;
   final List<OrderItem> items;
   final double valorTotal;
   final int status;
-  final String? endereco;
-  final String? telefone;
   final DateTime dataHora;
   final String? observacao;
 
   OrdersModel(
       {this.objectId,
+      required this.numVenda,
       required this.userId,
       required this.userName,
       required this.items,
       required this.valorTotal,
       required this.status,
-      this.endereco,
-      this.telefone,
       required this.dataHora,
       this.observacao});
 
   factory OrdersModel.fromJson(Map<String, dynamic> json) {
+    final cliente = json['cliente'] ?? {};
+    final data = json['dataHora'];
+    final itensJson = (json['itens'] as List<dynamic>?) ?? [];
     return OrdersModel(
       objectId: json['objectId'],
-      userId: json['userId'],
-      userName: json['userName'],
-      items: (json['items'] as List<dynamic>)
-          .map((item) => OrderItem.fromJson(item))
-          .toList(),
-      valorTotal: json['valorTotal']?.toDouble() ?? 0.0,
-      status: json['status'],
-      endereco: json['endereco'],
-      telefone: json['telefone'],
-      dataHora: json['dataHora'] != null
-          ? DateTime.parse(json['dataHora'])
+      numVenda: json['numVenda'] is int
+          ? json['numVenda']
+          : int.tryParse(json['numVenda'].toString()) ?? 0,
+      userId: cliente['objectId'],
+      userName: cliente['username'],
+      items: itensJson.map((item) => OrderItem.fromJson(item)).toList(),
+      valorTotal: json['valor_total']?.toDouble() ?? 0.0,
+      status: json['status'] is int
+          ? json['status']
+          : int.tryParse(json['status'].toString()) ?? 0,
+      dataHora: data != null && data['iso'] != null
+          ? DateTime.parse(data['iso'])
           : DateTime.now(),
       observacao: json['observacao'],
     );
@@ -43,13 +45,13 @@ class OrdersModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'objectId': objectId,
       'cliente': userId,
-      'userName': userName,
-      'items': items.map((item) => item.toJson()).toList(),
-      'valorTotalFront': valorTotal,
+      'username': userName,
+      'objectId': objectId,
+      'itens': items.map((item) => item.toJson()).toList(),
+      'valorTotalfront': valorTotal,
       'status': status,
-      'dataHora': dataHora.toIso8601String(),
+      'data': dataHora.toIso8601String(),
       'observacao': observacao,
     };
   }

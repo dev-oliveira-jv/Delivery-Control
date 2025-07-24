@@ -2,17 +2,17 @@ class ProductModel {
   final String? objectId;
   final String descricao;
   final double valor;
-  final int status;
-  final String grupoId;
-  final int estoque;
+  final int? status;
+  final String? grupoId;
+  final int? estoque;
 
   ProductModel({
     this.objectId,
     required this.descricao,
     required this.valor,
-    required this.status,
-    required this.grupoId,
-    required this.estoque,
+    this.status,
+    this.grupoId,
+    this.estoque,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {

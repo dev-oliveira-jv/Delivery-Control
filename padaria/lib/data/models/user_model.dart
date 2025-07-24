@@ -25,13 +25,16 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     final privelegeMap = json['privelege'] as Map<String, dynamic>?;
     return UserModel(
-        objectId: json['objectId'] as String?,
-        username: json['username'] as String?,
-        email: json['email'] as String?,
-        sessionToken: json['sessionToken'] as String?,
-        privelege: privelegeMap,
-        privelegeId: privelegeMap?['number'],
-        limiteCredito: json['limite']?.toDouble() ?? 0.0);
+      objectId: json['objectId'] as String?,
+      username: json['username'] as String?,
+      email: json['email'] as String?,
+      sessionToken: json['sessionToken'] as String?,
+      privelege: privelegeMap,
+      privelegeId: int.tryParse(privelegeMap?['number']?.toString() ?? '') ?? 3,
+      limiteCredito: (json['limite'] is int || json['limite'] is double)
+          ? (json['limite'] as num).toDouble()
+          : 0.0,
+    );
   }
 
   get obejectId => null;

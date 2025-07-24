@@ -14,7 +14,7 @@ class SelectUserPage extends StatelessWidget {
         title: Text("Selecionar Cliente"),
       ),
       body: FutureBuilder<List<UserModel>>(
-          future: userService.getUsersByPrivilege(3),
+          future: userService.getUsers(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -39,6 +39,7 @@ class SelectUserPage extends StatelessWidget {
                   final user = users[index];
                   return ListTile(
                     title: Text(user.username ?? ""),
+                    subtitle: Text(user.obejectId ?? ""),
                     onTap: () => Navigator.pop(context, user),
                   );
                 });

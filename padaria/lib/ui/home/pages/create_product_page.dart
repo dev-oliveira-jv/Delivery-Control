@@ -81,13 +81,13 @@ class _CreateProductPage extends State<CreateProductPage> {
       try {
         if (widget.productId != null) {
           await _productService.updateProduct(model.objectId!, model.descricao,
-              model.valor, model.status, model.grupoId, model.estoque);
+              model.valor, model.status!, model.grupoId!, model.estoque!);
 
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text("Produto atualizado com sucesso !")));
         } else {
           await _productService.createProduct(model.descricao, model.valor,
-              model.status, model.grupoId, model.estoque);
+              model.status!, model.grupoId!, model.estoque!);
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text("Produto cadastrado com sucesso !")));
         }

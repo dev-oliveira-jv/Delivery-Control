@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:padaria/core/enum/create_order_mode.dart';
 import 'package:padaria/data/models/user_model.dart';
+import 'package:padaria/ui/home/pages/client_orders.dart';
 import 'package:padaria/ui/home/pages/create_order_page.dart';
+import 'package:padaria/ui/home/pages/list_orders_page.dart';
 import 'pages/home_content.dart';
 import 'pages/create_product_page.dart';
 import 'pages/perfil_page.dart';
@@ -27,14 +30,22 @@ class _HomePageState extends State<HomePage> {
           PerfilPage(),
           CreateProductPage(),
           CreateOrderPage(
-              isAdmin: true, userId: user.objectId!, userName: user.username!)
+              mode: CreateOrderMode.criacaoAdmin,
+              isAdmin: true,
+              userId: user.objectId!,
+              userName: user.username!),
+          ListOrdersPage()
         ];
       case 2: // Entregador
         return [
           HomeContent(),
           PerfilPage(),
           CreateOrderPage(
-              isAdmin: true, userId: user.objectId!, userName: user.username!)
+              mode: CreateOrderMode.criacaoAdmin,
+              isAdmin: true,
+              userId: user.objectId!,
+              userName: user.username!),
+          ListOrdersPage()
         ];
       case 3: // Usuário
         return [
@@ -43,7 +54,14 @@ class _HomePageState extends State<HomePage> {
           ListProductPage(),
           CreateProductPage(),
           CreateOrderPage(
-              isAdmin: false, userId: user.objectId!, userName: user.username!)
+              mode: CreateOrderMode.criacaoCliente,
+              isAdmin: false,
+              userId: user.objectId!,
+              userName: user.username!),
+          ListOrdersPage(),
+          ClientOrders(
+            userId: user.obejectId,
+          ),
         ];
     }
     throw Exception('Privilegio não encontrado');
@@ -59,14 +77,18 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.app_registration), label: 'Produtos'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag), label: 'Pedidos')
+              icon: Icon(Icons.shopping_bag), label: 'Pedidos'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.tab), label: 'Lista de Pedidos'),
         ];
       case 2: // Entregador
         return const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Usuário'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag), label: 'Pedidos')
+              icon: Icon(Icons.shopping_bag), label: 'Pedidos'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.tab), label: 'Lista de Pedidos'),
         ];
       case 3: //Usuário
         return const [
@@ -77,7 +99,9 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.app_registration), label: 'Produto'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag), label: 'Pedidos')
+              icon: Icon(Icons.shopping_bag), label: 'Pedidos'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.tab), label: 'Lista de Pedidos'),
         ];
       default:
         throw Exception("Privilégio não encontrado");
